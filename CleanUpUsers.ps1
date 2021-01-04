@@ -6,8 +6,8 @@ Active Directory module or run from DC
 
 #User Variables: 
 $FileLocation = Get-Location
-$OutputFileLocation = "C:\Scripts"
-$OutputFileName = "\test.csv" # Backslash is needed before file name in this variable
+$OutputFileLocation = "."
+$OutputFileName = "\users.csv"
 [INT]$OverThisManyDays = 90
 $TargetOU = "" #This has to be the OUs distinguished name
 
@@ -31,7 +31,7 @@ Try
     {
         If((Test-Path -Path $OutputFileLocation) -eq $false)
             {
-                Write-Host "Was Borked. Shouldn't be now. Run it again." -ForegroundColor Yellow
+                Write-Host "Output file location incorrect, please try again." -ForegroundColor Yellow
                 New-Item -Path $OutputFileLocation -ItemType Directory
             }
         else #It's Working
@@ -53,10 +53,7 @@ Try
                     ##Stop being careful here:
             }
     }
-    Catch #If it all goes haywire
-        {
-             Write-Host "Suuuper Borked Yo. Call Stephen." -ForegroundColor Red
-             
-        }
- 
-
+    Catch #If it all goes haywire 
+    {
+        Write-Host "Generic error caught." -ForegroundColor Red        
+    }
