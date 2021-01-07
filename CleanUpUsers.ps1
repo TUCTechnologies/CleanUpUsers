@@ -1,13 +1,9 @@
-
 <#
 Requirements:
 Active Directory module or run from DC
 #>
 
 #User Variables: 
-$FileLocation = Get-Location
-$OutputFileLocation = "."
-$OutputFileName = "\users.csv"
 [INT]$OverThisManyDays = 90
 $TargetOU = "" #This has to be the OUs distinguished name
 
