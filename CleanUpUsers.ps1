@@ -20,14 +20,14 @@ $Timespan = "$OverThisManyDays" + ":00:00:00"
 $EnabledUsers = Get-ADUser -Filter * -Properties employeeType, LastLogonDate | where employeeType -eq "user" | where enabled -eq $true
 $EnabledServiceAccounts = Get-ADUser -Filter * -Properties employeeType, LastLogonDate | where employeeType -eq "service" | where enabled -eq $true
 $EnabledNoType = Get-ADUser -Filter * -Properties employeeType, LastLogonDate | where employeeType -eq $null | where enabled -eq $true
-$PasswordNoExpire = Get-ADUser -filter * -properties SamAccountName, Name, PasswordNeverExpires, Enabled, employeeType | where {$_.passwordNeverExpires -eq "true" -And $_.Enabled -eq "True" -And $_.employeeType -eq "user" } |  Select-Object DistinguishedName,Name,Enabled,SamAccountName
+$UsersPasswordNoExpire = Get-ADUser -filter * -properties SamAccountName, Name, PasswordNeverExpires, Enabled, employeeType | where {$_.passwordNeverExpires -eq "true" -And $_.Enabled -eq "True" -And $_.employeeType -eq "user" } |  Select-Object DistinguishedName,Name,Enabled,SamAccountName
 
 # Set user accounts to not expire
 #Get-ADUser -filter * -properties SamAccountName, Name, PasswordNeverExpires, Enabled, employeeType | where {$_.passwordNeverExpires -eq "true" -And $_.Enabled -eq "True" -And $_.employeeType -eq "user" } |  Select-Object DistinguishedName,Name,Enabled,SamAccountName | ForEach-Object {Set-ADUser -Identity $_.SamAccountName -PasswordNeverExpires:$FALSE}
 
 # These need to match positions
-$ObjectTypes = @($EnabledUsers,$EnabledServiceAccounts,$EnabledNoType, $PasswordNoExpire)
-$OutputFiles = @(".\users.csv",".\services.csv",".\notype.csv",".\users-not-expired.csv")
+$ObjectTypes = @($EnabledUsers,$EnabledServiceAccounts,$EnabledNoType,$UsersPasswordNoExpire)
+$OutputFiles = @(".\users-not-logged-in.csv",".\services-not-logged-in.csv",".\notype-not-logged-in.csv",".\users-not-expired.csv")
 
 Try {
 	For ($i=0; $i -lt $ObjectTypes.length; $i++) {
