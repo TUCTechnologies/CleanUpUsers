@@ -27,7 +27,7 @@ $PasswordNoExpire = Get-ADUser -filter * -properties SamAccountName, Name, Passw
 
 # These need to match positions
 $ObjectTypes = @($EnabledUsers,$EnabledServiceAccounts,$EnabledNoType, $PasswordNoExpire)
-$OutputFiles = @(".\users.csv",".\services.csv",".\notype.csv",".\users-not-expired")
+$OutputFiles = @(".\users.csv",".\services.csv",".\notype.csv",".\users-not-expired.csv")
 
 Try {
 	For ($i=0; $i -lt $ObjectTypes.length; $i++) {
